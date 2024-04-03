@@ -22,7 +22,7 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
         "PCT : 15 - 20": {"min": 15, "max": 20},
         "Morphine : 0.1": 0.1,
         "<u>Tramadol</u> : 2": 2,
-        "Glyco : 0.01":0.30,
+        "Glyco : 0.01":0.01,
         "Neo : 0.05": 0.05
     };
 
