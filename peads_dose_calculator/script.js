@@ -48,7 +48,7 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
 
     // Calculate cuffed and uncuffed values
     const cuffed = ((age / 4) + 3.5).toFixed(4); // Limit decimal places to 4
-    const uncuffed = ((age / 4) + 4).toFixed(4); // Limit decimal places to 4
+    const uncuffed = ((age / 3) + 3.75).toFixed(4); // Limit decimal places to 4
     resultsHTML += `<p><b>Cuffed:</b> ${cuffed} mm</p>`;
     resultsHTML += `<p><b>Uncuffed:</b> ${uncuffed} mm</p>`;
 
