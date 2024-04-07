@@ -32,7 +32,7 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
         let dosage;
         let unit;
         if (typeof constant === 'object') {
-            if (medication === "Fenta : 1 - 2") {
+            if (medication.includes("Fenta ")) {
                 dosage = calculateDosage(weight, constant.min, constant.max);
                 unit = "mcg";
             } else {
