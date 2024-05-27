@@ -2,7 +2,7 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
-    const age = parseInt(document.getElementById('age').value);
+    const age = parseFloat(document.getElementById('age').value);
     const weight = parseFloat(document.getElementById('weight').value);
 
     if (!name || !age || !weight) {
