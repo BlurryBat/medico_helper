@@ -1,3 +1,5 @@
+let originalCuffed, originalUncuffed;
+
 document.getElementById('medForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -22,11 +24,11 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
         "PCT : 15 - 20": {"min": 15, "max": 20},
         "Morphine : 0.1": 0.1,
         "<u>Tramadol</u> : 2": 2,
-        "Glyco : 0.01":0.01,
+        "Glyco : 0.01": 0.01,
         "Neo : 0.05": 0.05
     };
 
-    let resultsHTML = '<h2>Dosage Calculation for ' + name + '</h2>';
+    let resultsHTML = `<h2>Dosage Calculation for ${name}</h2>`;
 
     for (const [medication, constant] of Object.entries(medications)) {
         let dosage;
@@ -47,12 +49,16 @@ document.getElementById('medForm').addEventListener('submit', function(event) {
     }
 
     // Calculate cuffed and uncuffed values
-    const cuffed = ((age / 4) + 3.5).toFixed(4); // Limit decimal places to 4
-    const uncuffed = ((age / 3) + 3.75).toFixed(4); // Limit decimal places to 4
-    resultsHTML += `<p><b>Cuffed:</b> ${cuffed} mm</p>`;
-    resultsHTML += `<p><b>Uncuffed:</b> ${uncuffed} mm</p>`;
+    originalCuffed = ((age / 4) + 3.5).toFixed(4); // Save original cuffed
+    originalUncuffed = ((age / 3) + 3.75).toFixed(4); // Save original uncuffed
+
+    resultsHTML += `<p id="cuffed"><b>Cuffed:</b> ${originalCuffed} mm</p>`;
+    resultsHTML += `<p id="uncuffed"><b>Uncuffed:</b> ${originalUncuffed} mm</p>`;
 
     document.getElementById('results').innerHTML = resultsHTML;
+
+    // Show rounding buttons
+    document.getElementById('rounding-buttons').style.display = 'block';
 });
 
 document.getElementById('printButton').addEventListener('click', function() {
@@ -68,6 +74,25 @@ document.getElementById('printButton').addEventListener('click', function() {
     });
 });
 
+document.getElementById('roundToPointFive').addEventListener('click', function() {
+    updateTubeSize(originalCuffed, originalUncuffed, 0.5);
+});
+
+document.getElementById('roundToPointOne').addEventListener('click', function() {
+    updateTubeSize(originalCuffed, originalUncuffed, 0.1);
+});
+
+function updateTubeSize(cuffed, uncuffed, roundTo) {
+    const cuffedElement = document.getElementById('cuffed');
+    const uncuffedElement = document.getElementById('uncuffed');
+
+    const roundedCuffed = (Math.round(cuffed / roundTo) * roundTo).toFixed(1); // Round to specified value
+    const roundedUncuffed = (Math.round(uncuffed / roundTo) * roundTo).toFixed(1);
+
+    cuffedElement.innerHTML = `<b>Cuffed:</b> ${roundedCuffed} mm`;
+    uncuffedElement.innerHTML = `<b>Uncuffed:</b> ${roundedUncuffed} mm`;
+}
+
 function calculateDosage(weight, min, max) {
     const lowerLimit = min * weight;
     const upperLimit = max * weight;
@@ -82,7 +107,3 @@ function showToast() {
         toast.classList.remove('show');
     }, 3000);
 }
-
-
-
-
